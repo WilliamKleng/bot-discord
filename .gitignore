@@ -1,0 +1,12 @@
+# Secretos y variables de entorno (CRÍTICO)
+.env
+
+# Base de datos local (evita sobreescribir datos en la nube)
+*.db
+*.sqlite3
+
+# Entornos virtuales y caché de Python
+venv/
+env/
+__pycache__/
+*.pyc
