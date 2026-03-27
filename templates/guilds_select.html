@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8"><title>Seleccioná Servidor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-[#0b1120] text-slate-200 p-10">
+    <div class="max-w-6xl mx-auto">
+        <h1 class="text-3xl font-bold mb-10 text-center">Tus Servidores</h1>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {% for g in guilds %}
+            <div class="bg-slate-900/50 p-6 rounded-3xl border border-slate-800 hover:border-blue-500 transition-all">
+                <div class="flex items-center space-x-4 mb-6">
+                    <div class="w-12 h-12 bg-slate-700 rounded-xl flex items-center justify-center font-bold">{{ g.name[0] }}</div>
+                    <h2 class="font-bold truncate w-40">{{ g.name }}</h2>
+                </div>
+                <div class="space-y-3">
+                    <a href="{{ g.invite_url }}" class="block text-center py-2 bg-emerald-900/30 text-emerald-400 rounded-lg border border-emerald-800/50">Invitar</a>
+                    <a href="{{ g.dashboard_url }}" class="block text-center py-2 bg-blue-600 text-white rounded-lg font-bold">Panel de Control</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

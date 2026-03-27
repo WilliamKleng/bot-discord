@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8"><title>Dashboard | {{ guild_name }}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>.sidebar-link.active { background: rgba(59, 130, 246, 0.1); color: #60a5fa; border-left: 3px solid #3b82f6; }</style>
+</head>
+<body class="bg-[#0b1120] text-white flex min-h-screen">
+    <aside class="w-64 border-r border-slate-800 p-6 flex flex-col justify-between bg-slate-900/20">
+        <div>
+            <div class="font-bold text-xl mb-10 border-b border-slate-800 pb-4">{{ guild_name }}</div>
+            <nav class="space-y-2">
+                <a href="/dashboard/{{ guild_id }}" class="sidebar-link active flex p-3 rounded-lg text-slate-400">📊 Dashboard</a>
+                <a href="/dashboard/{{ guild_id }}/config" class="sidebar-link flex p-3 rounded-lg text-slate-400 hover:bg-slate-800">⚙️ Configuración</a>
+            </nav>
+        </div>
+        <a href="/callback" class="text-slate-500 text-sm">← Volver</a>
+    </aside>
+    <main class="flex-1 p-10">
+        <h2 class="text-3xl font-bold mb-10">Estadísticas</h2>
+        <div class="grid grid-cols-3 gap-6">
+            <div class="bg-slate-900/50 p-8 rounded-3xl border border-slate-800">
+                <p class="text-slate-400 text-sm uppercase">Miembros</p>
+                <p class="text-4xl font-bold">{{ total_members }}</p>
+            </div>
+            <div class="bg-slate-900/50 p-8 rounded-3xl border border-slate-800">
+                <p class="text-slate-400 text-sm uppercase">Ranking Activo</p>
+                <p class="text-4xl font-bold text-emerald-400">{{ total_ranked }}</p>
+            </div>
+            <div class="bg-slate-900/50 p-8 rounded-3xl border border-slate-800">
+                <p class="text-slate-400 text-sm uppercase">Warns</p>
+                <p class="text-4xl font-bold text-red-400">{{ total_warns }}</p>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
