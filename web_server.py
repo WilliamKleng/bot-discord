@@ -26,9 +26,13 @@ DISCORD_AUTH_URL = f"https://discord.com/api/oauth2/authorize?client_id={CLIENT_
 
 @app.get("/", response_class=HTMLResponse)
 async def index(request: Request):
-    """Página de inicio minimalista"""
-    return templates.TemplateResponse(request=request, name="index.html", context={"discord_auth_url": DISCORD_AUTH_URL})
-
+    # Generamos la URL aquí por seguridad
+    auth_url = f"https://discord.com/api/oauth2/authorize?client_id={CLIENT_ID}&redirect_uri={REDIRECT_URI}&response_type=code&scope=identify%20guilds"
+    return templates.TemplateResponse(
+        request=request, 
+        name="index.html", 
+        context={"discord_auth_url": auth_url} # <-- Esto debe estar sí o sí
+    )
 @app.get("/callback")
 async def callback(request: Request, code: Optional[str] = None):
     """Maneja el login de Discord. Si falta el code, redirige al inicio."""
