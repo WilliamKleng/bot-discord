@@ -7,38 +7,50 @@
     <link rel="stylesheet" href="{{ url_for('static', path='/css/style.css') }}">
 </head>
 <body class="flex min-h-screen">
-    <aside class="sidebar w-72 p-8 hidden md:flex flex-col">
+    <div class="grid-bg"></div>
+
+    <aside class="w-72 sidebar hidden md:flex flex-col p-8 z-10">
         <div class="mb-10 flex items-center gap-3">
-            <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center font-bold text-white uppercase">{{ guild_name[0] }}</div>
-            <span class="font-bold truncate">{{ guild_name }}</span>
+            <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center font-bold text-white shadow-lg shadow-blue-500/20">
+                {{ guild_name[0] if guild_name else '?' }}
+            </div>
+            <span class="font-bold text-white truncate">{{ guild_name }}</span>
         </div>
 
-        <nav class="space-y-4">
-            <a href="/dashboard/{{ guild_id }}" class="flex items-center gap-3 p-3 rounded-xl bg-slate-900 border-r-4 border-blue-500">📊 Estadísticas</a>
-            <a href="/dashboard/{{ guild_id }}/config" class="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-900 transition-all">⚙️ Configuración</a>
+        <nav class="flex-1 space-y-2">
+            <a href="/dashboard/{{ guild_id }}" class="flex items-center gap-3 p-3 rounded-xl bg-blue-600/10 text-blue-400 border-r-2 border-blue-500">
+                <span>📊</span> Dashboard
+            </a>
+            <a href="/dashboard/{{ guild_id }}/config" class="flex items-center gap-3 p-3 rounded-xl text-slate-400 hover:bg-slate-900 hover:text-white transition-all">
+                <span>⚙️</span> Configuración
+            </a>
         </nav>
 
-        <a href="/callback" class="mt-auto text-sm text-slate-500 hover:text-white">← Volver</a>
+        <div class="pt-6 border-t border-slate-800">
+            <a href="/callback" class="text-sm text-slate-500 hover:text-white flex items-center gap-2">
+                <span>←</span> Volver a servidores
+            </a>
+        </div>
     </aside>
 
-    <main class="flex-1 p-8 md:p-16">
+    <main class="flex-1 p-8 md:p-16 z-10">
         <header class="mb-12">
-            <h1 class="text-3xl font-bold">Vista General</h1>
-            <p class="text-slate-500 italic">Datos actuales de {{ guild_name }}</p>
+            <h1 class="text-4xl font-black text-white mb-2">Estadísticas</h1>
+            <p class="text-slate-500">Métricas actuales del servidor.</p>
         </header>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div class="glass-card p-8">
-                <span class="text-blue-500 font-bold uppercase text-xs tracking-widest">Miembros</span>
-                <p class="text-5xl font-black mt-2">{{ total_members }}</p>
+                <p class="text-xs font-bold text-blue-500 uppercase tracking-widest mb-2">Miembros Totales</p>
+                <p class="text-5xl font-black text-white">{{ total_members }}</p>
             </div>
             <div class="glass-card p-8">
-                <span class="text-emerald-500 font-bold uppercase text-xs tracking-widest">Usuarios en Ranking</span>
-                <p class="text-5xl font-black mt-2">{{ total_ranked }}</p>
+                <p class="text-xs font-bold text-emerald-500 uppercase tracking-widest mb-2">Usuarios Activos</p>
+                <p class="text-5xl font-black text-white">{{ total_ranked }}</p>
             </div>
             <div class="glass-card p-8">
-                <span class="text-red-500 font-bold uppercase text-xs tracking-widest">Advertencias</span>
-                <p class="text-5xl font-black mt-2">{{ total_warns }}</p>
+                <p class="text-xs font-bold text-red-500 uppercase tracking-widest mb-2">Infracciones</p>
+                <p class="text-5xl font-black text-white">{{ total_warns }}</p>
             </div>
         </div>
     </main>

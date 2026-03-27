@@ -2,31 +2,51 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Ajustes | {{ guild_name }}</title>
+    <title>Configurar | {{ guild_name }}</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="{{ url_for('static', path='/css/style.css') }}">
 </head>
 <body class="flex min-h-screen">
-    <aside class="sidebar w-72 p-8 hidden md:flex flex-col">
-        <nav class="space-y-4">
-            <a href="/dashboard/{{ guild_id }}" class="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-900 transition-all">📊 Estadísticas</a>
-            <a href="#" class="flex items-center gap-3 p-3 rounded-xl bg-slate-900 border-r-4 border-blue-500">⚙️ Configuración</a>
+    <div class="grid-bg"></div>
+
+    <aside class="w-72 sidebar hidden md:flex flex-col p-8 z-10">
+        <nav class="space-y-2">
+            <a href="/dashboard/{{ guild_id }}" class="flex items-center gap-3 p-3 rounded-xl text-slate-400 hover:bg-slate-900 hover:text-white transition-all">
+                <span>📊</span> Dashboard
+            </a>
+            <a href="#" class="flex items-center gap-3 p-3 rounded-xl bg-blue-600/10 text-blue-400 border-r-2 border-blue-500">
+                <span>⚙️</span> Configuración
+            </a>
         </nav>
     </aside>
 
-    <main class="flex-1 p-8 md:p-16">
-        <div class="max-w-2xl glass-card p-10">
-            <h2 class="text-2xl font-bold mb-8">Ajustes del Servidor</h2>
-            <form action="/dashboard/{{ guild_id }}/save" method="POST" class="space-y-6">
+    <main class="flex-1 p-8 md:p-16 z-10 flex justify-center">
+        <div class="max-w-2xl w-full">
+            <h1 class="text-3xl font-bold text-white mb-8">Ajustes del Bot</h1>
+            
+            <form action="/dashboard/{{ guild_id }}/config" method="POST" class="glass-card p-10 space-y-8">
                 <div>
-                    <label class="block text-sm font-bold text-slate-400 mb-2 uppercase">Canal de Bienvenida</label>
-                    <input type="text" name="welcome_channel" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 focus:border-blue-500 outline-none" placeholder="ID del canal">
+                    <label class="block text-xs font-black text-slate-500 uppercase tracking-widest mb-3">ID Canal de Bienvenida</label>
+                    <input type="text" name="welcome_channel_id" value="{{ welcome_channel_id }}" 
+                           class="w-full bg-slate-950 border border-slate-800 rounded-2xl p-4 text-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all"
+                           placeholder="Ex: 123456789012345678">
                 </div>
+
                 <div>
-                    <label class="block text-sm font-bold text-slate-400 mb-2 uppercase">Mensaje de Bienvenida</label>
-                    <textarea name="welcome_msg" rows="3" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 focus:border-blue-500 outline-none"></textarea>
+                    <label class="block text-xs font-black text-slate-500 uppercase tracking-widest mb-3">ID Rol Automático</label>
+                    <input type="text" name="auto_role_id" value="{{ auto_role_id }}" 
+                           class="w-full bg-slate-950 border border-slate-800 rounded-2xl p-4 text-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all"
+                           placeholder="Ex: 887766554433221100">
                 </div>
-                <button type="submit" class="w-full btn-primary py-4">Guardar Cambios</button>
+
+                <div class="pt-4">
+                    <button type="submit" class="w-full btn-primary py-4 text-lg">
+                        Guardar Configuración
+                    </button>
+                    {% if request.query_params.get('success') %}
+                    <p class="text-center text-emerald-500 mt-4 font-bold animate-pulse">✓ Cambios guardados correctamente</p>
+                    {% endif %}
+                </div>
             </form>
         </div>
     </main>

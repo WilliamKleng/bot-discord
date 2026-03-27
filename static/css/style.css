@@ -1,14 +1,14 @@
 :root {
-    --bg-dark: #020617;
-    --card-bg: rgba(30, 41, 59, 0.4);
-    --border: rgba(255, 255, 255, 0.08);
+    --bg-dark: #020617; /* Azul casi negro */
+    --card-bg: rgba(15, 23, 42, 0.6);
+    --border: rgba(255, 255, 255, 0.05);
     --accent: #3b82f6;
 }
 
 body {
     background-color: var(--bg-dark);
-    color: #f1f5f9;
-    font-family: 'Inter', sans-serif;
+    color: #e2e8f0;
+    font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
 .glass-card {
@@ -39,4 +39,9 @@ body {
 .btn-premium:hover {
     filter: brightness(1.1);
     box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+}
+
+input {
+    background-color: #020617 !important;
+    color: white !important;
 }
