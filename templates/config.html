@@ -1,41 +1,52 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    <title>Configurar Servidor</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajustes | {{ guild_id }}</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background: #0f172a; }
+        .glass { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); }
+    </style>
 </head>
-<body class="bg-gray-900 text-white font-sans">
-    <div class="container mx-auto py-10 max-w-lg">
+<body class="text-slate-200 min-h-screen flex items-center justify-center p-4">
+    <div class="max-w-xl w-full">
         <div class="flex items-center justify-between mb-8">
-            <h1 class="text-3xl font-bold">Ajustes del Servidor</h1>
-            <a href="javascript:history.back()" class="text-gray-400 hover:text-white transition">Volver</a>
+            <h1 class="text-3xl font-bold text-white">Configuración</h1>
+            <a href="javascript:history.back()" class="text-slate-400 hover:text-white transition-colors flex items-center font-medium">
+                <span class="mr-1">←</span> Volver
+            </a>
         </div>
 
         {% if mensaje %}
-        <div class="bg-green-600/20 border border-green-500 text-green-400 p-4 rounded mb-6 text-center font-semibold">
+        <div class="bg-emerald-500/10 border border-emerald-500/50 text-emerald-400 p-4 rounded-xl mb-8 text-center animate-pulse">
             {{ mensaje }}
         </div>
         {% endif %}
 
-        <form action="/config/{{ guild_id }}" method="POST" class="bg-gray-800 p-6 rounded-lg shadow-lg border border-gray-700">
-            
-            <div class="mb-6">
-                <label class="block text-gray-300 text-sm font-bold mb-2">ID del Canal de Bienvenida</label>
-                <input type="text" name="welcome_channel_id" value="{{ welcome_channel_id }}" placeholder="Ej: 123456789012345678" class="shadow appearance-none border border-gray-600 rounded w-full py-3 px-4 bg-gray-700 text-white leading-tight focus:outline-none focus:border-blue-500 transition">
-                <p class="text-xs text-gray-500 mt-2">Hacé clic derecho en un canal en Discord y seleccioná "Copiar ID de canal".</p>
+        <form action="/config/{{ guild_id }}" method="POST" class="glass p-8 rounded-3xl shadow-2xl space-y-8">
+            <div class="space-y-2">
+                <label class="block text-sm font-semibold text-slate-300 uppercase tracking-wider">ID del Canal de Bienvenida</label>
+                <input type="text" name="welcome_channel_id" value="{{ welcome_channel_id }}" 
+                       placeholder="1234567890..." 
+                       class="w-full bg-slate-800/50 border border-slate-700 rounded-xl py-4 px-5 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
+                <p class="text-xs text-slate-500 italic">ID del canal donde el bot saludará a los nuevos miembros.</p>
             </div>
 
-            <div class="mb-6">
-                <label class="block text-gray-300 text-sm font-bold mb-2">ID del Rol Automático (Nivel 5)</label>
-                <input type="text" name="auto_role_id" value="{{ auto_role_id }}" placeholder="Ej: 987654321098765432" class="shadow appearance-none border border-gray-600 rounded w-full py-3 px-4 bg-gray-700 text-white leading-tight focus:outline-none focus:border-blue-500 transition">
-                <p class="text-xs text-gray-500 mt-2">El ID del rol que el bot asignará al llegar al nivel configurado.</p>
+            <div class="space-y-2">
+                <label class="block text-sm font-semibold text-slate-300 uppercase tracking-wider">ID del Rol Automático (Nivel 5)</label>
+                <input type="text" name="auto_role_id" value="{{ auto_role_id }}" 
+                       placeholder="9876543210..." 
+                       class="w-full bg-slate-800/50 border border-slate-700 rounded-xl py-4 px-5 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
+                <p class="text-xs text-slate-500 italic">Este rol se otorgará automáticamente al alcanzar el nivel configurado.</p>
             </div>
 
-            <div class="flex items-center justify-end">
-                <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded focus:outline-none focus:shadow-outline transition">
-                    Guardar Cambios
-                </button>
-            </div>
+            <button type="submit" 
+                    class="w-full py-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-extrabold rounded-2xl shadow-xl shadow-blue-900/30 transform active:scale-95 transition-all">
+                Guardar Configuración
+            </button>
         </form>
     </div>
 </body>
