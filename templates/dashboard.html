@@ -1,196 +1,156 @@
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard | Panel de Control</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Inter', sans-serif; background: #0f172a; }
-        .glass { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); }
-        .card-hover:hover { transform: translateY(-5px); transition: all 0.3s ease; border-color: #3b82f6; }
-    </style>
-</head>
-<body class="text-slate-200 min-h-screen">
-    <div class="container mx-auto py-12 px-4 max-w-6xl">
-        <header class="text-center mb-16">
-            <h1 class="text-4xl font-extrabold text-white tracking-tight mb-2">Tus Servidores</h1>
-            <p class="text-slate-400">Seleccioná un servidor para gestionar la configuración del bot.</p>
-        </header>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {% for g in guilds %}
-            <div class="glass p-6 rounded-2xl card-hover flex flex-col justify-between shadow-2xl">
-                <div class="flex items-center space-x-4 mb-8">
-                    {% if g.icon %}
-                    <img src="https://cdn.discordapp.com/icons/{{ g.id }}/{{ g.icon }}.png" class="w-16 h-16 rounded-2xl shadow-lg border-2 border-slate-700">
-                    {% else %}
-                    <div class="w-16 h-16 bg-gradient-to-br from-slate-700 to-slate-800 rounded-2xl flex items-center justify-center text-2xl font-bold border-2 border-slate-600">
-                        {{ g.name[0] }}
-                    </div>
-                    {% endif %}
-                    <h2 class="text-xl font-bold text-white truncate w-40">{{ g.name }}</h2>
-                </div>
-
-                <div class="space-y-3">
-                    <a href="{{ g.invite_url }}" target="_blank" 
-                       class="flex items-center justify-center w-full py-3 px-4 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl font-bold transition-all duration-200 shadow-lg shadow-emerald-900/20">
-                        <span class="mr-2">➕</span> Invitar Bot
-                    </a>
-                    
-                    <a href="/config/{{ g.id }}" 
-                       class="flex items-center justify-center w-full py-3 px-4 bg-blue-600 hover:bg-blue-500 text-white rounded-xl font-bold transition-all duration-200 shadow-lg shadow-blue-900/20">
-                        <span class="mr-2">⚙️</span> Configurar
-                    </a>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-    </div>
-</body>
-</html>
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard | Panel de Control</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Inter', sans-serif; background: #0f172a; }
-        .glass { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); }
-        .card-hover:hover { transform: translateY(-5px); transition: all 0.3s ease; border-color: #3b82f6; }
-        .sidebar { background: rgba(30, 41, 59, 0.95); box-shadow: 2px 0 24px 0 #0004; }
-    </style>
+    <title>Dashboard — {{ guild_name }}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css">
 </head>
-<body class="text-slate-200 min-h-screen flex">
-    <!-- Sidebar -->
-    <aside class="sidebar w-20 min-h-screen flex flex-col items-center py-6 px-2 bg-slate-900 border-r border-slate-800">
-        <!-- Logo -->
-        <div class="mb-10">
-            <img src="https://cdn-icons-png.flaticon.com/512/5968/5968756.png" alt="Bot Logo" class="w-10 h-10 rounded-xl shadow-lg">
+<body>
+    <aside class="sidebar">
+        <div class="sidebar-guild">
+            <div class="guild-icon">{{ guild_name[0] if guild_name else '?' }}</div>
+            <div>
+                <div class="guild-name">{{ guild_name }}</div>
+                <div class="guild-sub">{{ total_miembros }} miembros</div>
+            </div>
         </div>
-        <!-- Nav Icons -->
-        <nav class="flex-1 flex flex-col gap-6 items-center justify-center">
-            <a href="/" class="group flex items-center justify-center w-12 h-12 rounded-xl hover:bg-blue-700 transition relative" title="Inicio">
-                <svg class="w-7 h-7 text-blue-400 group-hover:text-blue-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0h6"/></svg>
-                <span class="absolute left-14 bg-slate-800 text-xs text-white rounded px-2 py-1 opacity-0 group-hover:opacity-100 transition pointer-events-none">Inicio</span>
-            </a>
-            <a href="#" class="group flex items-center justify-center w-12 h-12 rounded-xl hover:bg-blue-700 transition relative" title="Actividad">
-                <svg class="w-7 h-7 text-slate-400 group-hover:text-blue-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 8v4l3 3"/></svg>
-                <span class="absolute left-14 bg-slate-800 text-xs text-white rounded px-2 py-1 opacity-0 group-hover:opacity-100 transition pointer-events-none">Actividad</span>
-            </a>
-            <a href="#" class="group flex items-center justify-center w-12 h-12 rounded-xl hover:bg-blue-700 transition relative" title="Soporte">
-                <svg class="w-7 h-7 text-slate-400 group-hover:text-blue-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg>
-                <span class="absolute left-14 bg-slate-800 text-xs text-white rounded px-2 py-1 opacity-0 group-hover:opacity-100 transition pointer-events-none">Soporte</span>
-            </a>
+        <nav class="sidebar-nav">
+            <div class="nav-section">General</div>
+            <a href="/dashboard/{{ guild_id }}" class="active"><span class="nav-pip"></span> Dashboard</a>
+            <a href="/dashboard/{{ guild_id }}/config"><span class="nav-pip"></span> Configuración</a>
+            <div class="nav-section">Moderación</div>
+            <a href="#"><span class="nav-pip"></span> Warns</a>
+            <a href="#"><span class="nav-pip"></span> Bans</a>
+            <div class="nav-section">Comunidad</div>
+            <a href="#"><span class="nav-pip"></span> Niveles</a>
+            <a href="#"><span class="nav-pip"></span> Bienvenidas</a>
         </nav>
-        <!-- Action Button -->
-        <div class="mt-auto mb-4">
-            <a href="{{ guilds[0].invite_url if guilds else '#' }}" target="_blank" class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white text-3xl shadow-lg transition" title="Invitar Bot">
-                +
-            </a>
+        <div class="sidebar-user">
+            <div class="user-avatar">A</div>
+            <div class="user-name">Admin</div>
         </div>
     </aside>
-    <!-- Main Content -->
-    <main class="flex-1 flex flex-col min-h-screen bg-gradient-to-br from-slate-900 to-slate-800">
-        <header class="px-10 pt-10 pb-6">
-            <h1 class="text-4xl font-extrabold text-white tracking-tight mb-2">Dashboard del Servidor</h1>
-            <p class="text-slate-400">Resumen y estado de tu comunidad de Discord.</p>
-        </header>
-        <section class="flex-1 px-10 pb-10 flex flex-col gap-10">
-            <!-- KPIs -->
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
-                <div class="glass p-6 rounded-2xl flex flex-col items-center text-center">
-                    <div class="text-3xl font-extrabold text-blue-400 mb-1">{{ total_miembros }}</div>
-                    <div class="text-xs uppercase text-slate-400 tracking-wider">Miembros</div>
-                </div>
-                <div class="glass p-6 rounded-2xl flex flex-col items-center text-center">
-                    <div class="text-3xl font-extrabold text-emerald-400 mb-1">{{ usuarios_ranking }}</div>
-                    <div class="text-xs uppercase text-slate-400 tracking-wider">Usuarios en Ranking</div>
-                </div>
-                <div class="glass p-6 rounded-2xl flex flex-col items-center text-center">
-                    <div class="text-3xl font-extrabold text-indigo-400 mb-1">{{ xp_total }}</div>
-                    <div class="text-xs uppercase text-slate-400 tracking-wider">XP Total</div>
-                </div>
-                <div class="glass p-6 rounded-2xl flex flex-col items-center text-center">
-                    <div class="text-3xl font-extrabold text-rose-400 mb-1">{{ total_warns }}</div>
-                    <div class="text-xs uppercase text-slate-400 tracking-wider">Warns</div>
-                </div>
+
+    <div class="main">
+        <div class="topbar">
+            <div>
+                <div class="page-title">Dashboard</div>
+                <div class="page-sub">{{ guild_name }} — resumen del servidor</div>
             </div>
-            <!-- Main Content: Leaderboard & Actividad -->
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <!-- Leaderboard -->
-                <div class="glass rounded-2xl p-6 col-span-1 flex flex-col">
-                    <h2 class="text-lg font-bold mb-4 text-white">Top 5 Usuarios</h2>
-                    <ol class="space-y-3">
+        </div>
+
+        <div class="content">
+            <div class="kpis">
+                <div class="kpi">
+                    <div class="kpi-label">Miembros</div>
+                    <div class="kpi-val blue">{{ total_miembros }}</div>
+                    <div class="kpi-delta">en el servidor</div>
+                </div>
+                <div class="kpi">
+                    <div class="kpi-label">Usuarios activos</div>
+                    <div class="kpi-val green">{{ usuarios_ranking }}</div>
+                    <div class="kpi-delta">en ranking</div>
+                </div>
+                <div class="kpi">
+                    <div class="kpi-label">XP total</div>
+                    <div class="kpi-val purple">{{ xp_total }}</div>
+                    <div class="kpi-delta">acumulado</div>
+                </div>
+                <div class="kpi">
+                    <div class="kpi-label">Warns activos</div>
+                    <div class="kpi-val red">{{ total_warns }}</div>
+                    <div class="kpi-delta {% if total_warns > 0 %}dn{% endif %}">registrados</div>
+                </div>
+
+                
+            </div>
+            <script>
+                {% if total_warns > 0 %}
+                document.getElementById('warns-delta').classList.add('dn');
+                {% endif %}
+            </script>
+
+            <div class="grid-2">
+                <div class="card">
+                    <div class="card-head">
+                        <span class="card-title">Top usuarios</span>
+                        <span class="card-sub">por nivel y XP</span>
+                    </div>
+                    <div class="card-body">
                         {% for user in top_usuarios %}
-                        <li class="flex items-center gap-3">
-                            <span class="text-xl font-bold text-blue-400">#{{ loop.index }}</span>
-                            <img src="{{ user.avatar_url }}" class="w-10 h-10 rounded-full border-2 border-slate-700" alt="avatar">
-                            <span class="font-semibold text-white">{{ user.username }}</span>
-                            <span class="ml-auto text-slate-400 text-sm">Nivel {{ user.nivel }}</span>
-                        </li>
+                        <div class="row-item">
+                            <div class="rank-num">#{{ loop.index }}</div>
+                            <div class="av" style="background: #5865f2;">
+                                <img src="{{ user.avatar_url }}" alt="{{ user.username }}" onerror="this.style.display='none'">
+                                {{ user.username[0] }}
+                            </div>              
+                            <div class="row-info">
+                                <div class="row-name">{{ user.username }}</div>
+                                <div class="row-sub">Nivel {{ user.nivel }} · {{ user.xp }} XP</div>
+                            </div>
+                            <div class="xp-bar-wrap">
+                                <div class="kpi-delta" id="warns-delta">registrados</div>
+                            </div>
+                        </div>
+                        {% else %}
+                        <p style="font-size:13px; color:var(--text-soft); padding: 8px 0;">Sin datos de niveles todavía.</p>
                         {% endfor %}
-                    </ol>
+                    </div>
                 </div>
-                <!-- Actividad Reciente -->
-                <div class="glass rounded-2xl p-6 col-span-2 flex flex-col">
-                    <h2 class="text-lg font-bold mb-4 text-white">Actividad Reciente</h2>
-                    <table class="w-full text-left text-sm">
-                        <thead>
-                            <tr class="text-slate-400">
-                                <th>Usuario</th>
-                                <th>Acción</th>
-                                <th>Moderador</th>
-                                <th>Fecha</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for warn in ultimos_warns %}
-                            <tr class="border-b border-slate-800">
-                                <td class="py-2 flex items-center gap-2">
-                                    <img src="{{ warn.user_avatar }}" class="w-7 h-7 rounded-full">
-                                    {{ warn.username }}
-                                </td>
-                                <td class="py-2 text-rose-400">{{ warn.razon }}</td>
-                                <td class="py-2">{{ warn.moderador }}</td>
-                                <td class="py-2 text-slate-400">{{ warn.fecha }}</td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
+
+                <div class="card">
+                    <div class="card-head">
+                        <span class="card-title">Últimas acciones</span>
+                        <span class="card-sub">moderación</span>
+                    </div>
+                    <div class="card-body">
+                        {% for warn in ultimos_warns %}
+                        <div class="row-item">
+                            <div class="av" style="background:#ef4444;">
+                                <img src="{{ warn.user_avatar }}" alt="{{ warn.username }}" onerror="this.style.display='none'">
+                                {{ warn.username[0] }}
+                            </div>
+                            <div class="row-info">
+                                <div class="row-name">{{ warn.username }}</div>
+                                <div class="row-sub">{{ warn.razon }}</div>
+                            </div>
+                            <div style="text-align:right;">
+                                <span class="badge badge-warn">WARN</span>
+                                <div class="time-badge" style="margin-top:3px;">{{ warn.fecha }}</div>
+                            </div>
+                        </div>
+                        {% else %}
+                        <p style="font-size:13px; color:var(--text-soft); padding: 8px 0;">Sin acciones recientes.</p>
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
-            <!-- Estado de Configuración y Gráfico -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-6">
-                <div class="glass rounded-2xl p-6 flex flex-col gap-2">
-                    <h2 class="text-base font-bold text-white mb-2">Estado de Configuración</h2>
-                    <div class="flex items-center gap-2">
-                        <span class="font-semibold">Canal de Bienvenida:</span>
+
+            <div class="card">
+                <div class="card-head">
+                    <span class="card-title">Estado de configuración</span>
+                </div>
+                <div class="card-body">
+                    <div class="row-item">
+                        <div class="row-info"><div class="row-name">Canal de bienvenida</div></div>
                         {% if welcome_channel_id %}
-                        <span class="text-emerald-400">#{{ welcome_channel_id }}</span>
+                            <span class="badge badge-ok">Configurado</span>
                         {% else %}
-                        <span class="text-rose-400">Apagado</span>
+                            <span class="badge badge-warn">Sin configurar</span>
                         {% endif %}
                     </div>
-                    <div class="flex items-center gap-2">
-                        <span class="font-semibold">Rol Automático:</span>
+                    <div class="row-item">
+                        <div class="row-info"><div class="row-name">Rol automático (nivel 5)</div></div>
                         {% if auto_role_id %}
-                        <span class="text-blue-400">{{ auto_role_id }}</span>
+                            <span class="badge badge-ok">Configurado</span>
                         {% else %}
-                        <span class="text-rose-400">No Configurado</span>
+                            <span class="badge badge-warn">Sin configurar</span>
                         {% endif %}
                     </div>
-                </div>
-                <div class="glass rounded-2xl p-6 md:col-span-2 flex flex-col items-center justify-center">
-                    <h2 class="text-base font-bold text-white mb-2">Actividad Semanal</h2>
-                    <!-- Placeholder para gráfico -->
-                    <div class="w-full h-32 flex items-center justify-center text-slate-500 italic">[Gráfico de actividad aquí]</div>
                 </div>
             </div>
-        </section>
-    </main>
+        </div>
+    </div>
 </body>
 </html>
