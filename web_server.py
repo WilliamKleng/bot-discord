@@ -69,7 +69,7 @@ async def callback(request: Request, code: str):
         for g in all_guilds:
             permissions = int(g.get('permissions', 0))
             if (permissions & 0x8) == 0x8:
-                g['invite_url'] = f"https://discord.com/api/oauth2/authorize?client_id={CLIENT_ID}&permissions=8&scope=bot%20applications.commands&guild_id={g['id']}"
+                g['invite_url'] = f"https://discord.com/api/oauth2/authorize?client_id={CLIENT_ID}&permissions=4506898431470678&scope=bot%20applications.commands&guild_id={g['id']}"
                 admin_guilds.append(g)
 
     return templates.TemplateResponse(
