@@ -1,0 +1,42 @@
+:root {
+    --bg-dark: #020617;
+    --card-bg: rgba(30, 41, 59, 0.4);
+    --border: rgba(255, 255, 255, 0.08);
+    --accent: #3b82f6;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: #f1f5f9;
+    font-family: 'Inter', sans-serif;
+}
+
+.glass-card {
+    background: var(--card-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border);
+    border-radius: 2rem;
+    transition: all 0.3s ease;
+}
+
+.glass-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-4px);
+}
+
+.nav-sidebar {
+    background: #020617;
+    border-right: 1px solid var(--border);
+}
+
+.btn-premium {
+    background: var(--accent);
+    border-radius: 1rem;
+    font-weight: 700;
+    transition: all 0.2s;
+}
+
+.btn-premium:hover {
+    filter: brightness(1.1);
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+}
