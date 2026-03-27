@@ -96,35 +96,99 @@
     <!-- Main Content -->
     <main class="flex-1 flex flex-col min-h-screen bg-gradient-to-br from-slate-900 to-slate-800">
         <header class="px-10 pt-10 pb-6">
-            <h1 class="text-4xl font-extrabold text-white tracking-tight mb-2">Tus Servidores</h1>
-            <p class="text-slate-400">Seleccioná un servidor para gestionar la configuración del bot.</p>
+            <h1 class="text-4xl font-extrabold text-white tracking-tight mb-2">Dashboard del Servidor</h1>
+            <p class="text-slate-400">Resumen y estado de tu comunidad de Discord.</p>
         </header>
-        <section class="flex-1 px-10 pb-10">
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                {% for g in guilds %}
-                <div class="glass p-6 rounded-2xl card-hover flex flex-col justify-between shadow-2xl">
-                    <div class="flex items-center space-x-4 mb-8">
-                        {% if g.icon %}
-                        <img src="https://cdn.discordapp.com/icons/{{ g.id }}/{{ g.icon }}.png" class="w-16 h-16 rounded-2xl shadow-lg border-2 border-slate-700">
+        <section class="flex-1 px-10 pb-10 flex flex-col gap-10">
+            <!-- KPIs -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+                <div class="glass p-6 rounded-2xl flex flex-col items-center text-center">
+                    <div class="text-3xl font-extrabold text-blue-400 mb-1">{{ total_miembros }}</div>
+                    <div class="text-xs uppercase text-slate-400 tracking-wider">Miembros</div>
+                </div>
+                <div class="glass p-6 rounded-2xl flex flex-col items-center text-center">
+                    <div class="text-3xl font-extrabold text-emerald-400 mb-1">{{ usuarios_ranking }}</div>
+                    <div class="text-xs uppercase text-slate-400 tracking-wider">Usuarios en Ranking</div>
+                </div>
+                <div class="glass p-6 rounded-2xl flex flex-col items-center text-center">
+                    <div class="text-3xl font-extrabold text-indigo-400 mb-1">{{ xp_total }}</div>
+                    <div class="text-xs uppercase text-slate-400 tracking-wider">XP Total</div>
+                </div>
+                <div class="glass p-6 rounded-2xl flex flex-col items-center text-center">
+                    <div class="text-3xl font-extrabold text-rose-400 mb-1">{{ total_warns }}</div>
+                    <div class="text-xs uppercase text-slate-400 tracking-wider">Warns</div>
+                </div>
+            </div>
+            <!-- Main Content: Leaderboard & Actividad -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Leaderboard -->
+                <div class="glass rounded-2xl p-6 col-span-1 flex flex-col">
+                    <h2 class="text-lg font-bold mb-4 text-white">Top 5 Usuarios</h2>
+                    <ol class="space-y-3">
+                        {% for user in top_usuarios %}
+                        <li class="flex items-center gap-3">
+                            <span class="text-xl font-bold text-blue-400">#{{ loop.index }}</span>
+                            <img src="{{ user.avatar_url }}" class="w-10 h-10 rounded-full border-2 border-slate-700" alt="avatar">
+                            <span class="font-semibold text-white">{{ user.username }}</span>
+                            <span class="ml-auto text-slate-400 text-sm">Nivel {{ user.nivel }}</span>
+                        </li>
+                        {% endfor %}
+                    </ol>
+                </div>
+                <!-- Actividad Reciente -->
+                <div class="glass rounded-2xl p-6 col-span-2 flex flex-col">
+                    <h2 class="text-lg font-bold mb-4 text-white">Actividad Reciente</h2>
+                    <table class="w-full text-left text-sm">
+                        <thead>
+                            <tr class="text-slate-400">
+                                <th>Usuario</th>
+                                <th>Acción</th>
+                                <th>Moderador</th>
+                                <th>Fecha</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for warn in ultimos_warns %}
+                            <tr class="border-b border-slate-800">
+                                <td class="py-2 flex items-center gap-2">
+                                    <img src="{{ warn.user_avatar }}" class="w-7 h-7 rounded-full">
+                                    {{ warn.username }}
+                                </td>
+                                <td class="py-2 text-rose-400">{{ warn.razon }}</td>
+                                <td class="py-2">{{ warn.moderador }}</td>
+                                <td class="py-2 text-slate-400">{{ warn.fecha }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- Estado de Configuración y Gráfico -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-6">
+                <div class="glass rounded-2xl p-6 flex flex-col gap-2">
+                    <h2 class="text-base font-bold text-white mb-2">Estado de Configuración</h2>
+                    <div class="flex items-center gap-2">
+                        <span class="font-semibold">Canal de Bienvenida:</span>
+                        {% if welcome_channel_id %}
+                        <span class="text-emerald-400">#{{ welcome_channel_id }}</span>
                         {% else %}
-                        <div class="w-16 h-16 bg-gradient-to-br from-slate-700 to-slate-800 rounded-2xl flex items-center justify-center text-2xl font-bold border-2 border-slate-600">
-                            {{ g.name[0] }}
-                        </div>
+                        <span class="text-rose-400">Apagado</span>
                         {% endif %}
-                        <h2 class="text-xl font-bold text-white truncate w-40">{{ g.name }}</h2>
                     </div>
-                    <div class="space-y-3">
-                        <a href="{{ g.invite_url }}" target="_blank" 
-                           class="flex items-center justify-center w-full py-3 px-4 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl font-bold transition-all duration-200 shadow-lg shadow-emerald-900/20">
-                            <span class="mr-2">➕</span> Invitar Bot
-                        </a>
-                        <a href="/config/{{ g.id }}" 
-                           class="flex items-center justify-center w-full py-3 px-4 bg-blue-600 hover:bg-blue-500 text-white rounded-xl font-bold transition-all duration-200 shadow-lg shadow-blue-900/20">
-                            <span class="mr-2">⚙️</span> Configurar
-                        </a>
+                    <div class="flex items-center gap-2">
+                        <span class="font-semibold">Rol Automático:</span>
+                        {% if auto_role_id %}
+                        <span class="text-blue-400">{{ auto_role_id }}</span>
+                        {% else %}
+                        <span class="text-rose-400">No Configurado</span>
+                        {% endif %}
                     </div>
                 </div>
-                {% endfor %}
+                <div class="glass rounded-2xl p-6 md:col-span-2 flex flex-col items-center justify-center">
+                    <h2 class="text-base font-bold text-white mb-2">Actividad Semanal</h2>
+                    <!-- Placeholder para gráfico -->
+                    <div class="w-full h-32 flex items-center justify-center text-slate-500 italic">[Gráfico de actividad aquí]</div>
+                </div>
             </div>
         </section>
     </main>
