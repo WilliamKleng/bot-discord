@@ -66,27 +66,31 @@
 </head>
 <body class="text-slate-200 min-h-screen flex">
     <!-- Sidebar -->
-    <aside class="sidebar w-64 min-h-screen flex flex-col py-8 px-6 border-r border-slate-800">
-        <div class="flex items-center mb-12">
-            <img src="https://cdn-icons-png.flaticon.com/512/5968/5968756.png" alt="Bot Logo" class="w-10 h-10 mr-3 rounded-xl shadow-lg">
-            <span class="text-2xl font-extrabold tracking-tight text-white">Bot Dashboard</span>
+    <aside class="sidebar w-20 min-h-screen flex flex-col items-center py-6 px-2 bg-slate-900 border-r border-slate-800">
+        <!-- Logo -->
+        <div class="mb-10">
+            <img src="https://cdn-icons-png.flaticon.com/512/5968/5968756.png" alt="Bot Logo" class="w-10 h-10 rounded-xl shadow-lg">
         </div>
-        <nav class="flex-1 flex flex-col gap-2">
-            <a href="/" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-blue-600/20 transition font-semibold text-blue-400">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0h6"/></svg>
-                Inicio
+        <!-- Nav Icons -->
+        <nav class="flex-1 flex flex-col gap-6 items-center justify-center">
+            <a href="/" class="group flex items-center justify-center w-12 h-12 rounded-xl hover:bg-blue-700 transition relative" title="Inicio">
+                <svg class="w-7 h-7 text-blue-400 group-hover:text-blue-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0h6"/></svg>
+                <span class="absolute left-14 bg-slate-800 text-xs text-white rounded px-2 py-1 opacity-0 group-hover:opacity-100 transition pointer-events-none">Inicio</span>
             </a>
-            <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-blue-600/20 transition font-semibold text-slate-300">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 8v4l3 3"/></svg>
-                Actividad
+            <a href="#" class="group flex items-center justify-center w-12 h-12 rounded-xl hover:bg-blue-700 transition relative" title="Actividad">
+                <svg class="w-7 h-7 text-slate-400 group-hover:text-blue-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 8v4l3 3"/></svg>
+                <span class="absolute left-14 bg-slate-800 text-xs text-white rounded px-2 py-1 opacity-0 group-hover:opacity-100 transition pointer-events-none">Actividad</span>
             </a>
-            <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-blue-600/20 transition font-semibold text-slate-300">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg>
-                Soporte
+            <a href="#" class="group flex items-center justify-center w-12 h-12 rounded-xl hover:bg-blue-700 transition relative" title="Soporte">
+                <svg class="w-7 h-7 text-slate-400 group-hover:text-blue-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg>
+                <span class="absolute left-14 bg-slate-800 text-xs text-white rounded px-2 py-1 opacity-0 group-hover:opacity-100 transition pointer-events-none">Soporte</span>
             </a>
         </nav>
-        <div class="mt-auto pt-8 border-t border-slate-800">
-            <p class="text-xs text-slate-500">&copy; 2026 Bot Dashboard. Todos los derechos reservados.</p>
+        <!-- Action Button -->
+        <div class="mt-auto mb-4">
+            <a href="{{ guilds[0].invite_url if guilds else '#' }}" target="_blank" class="flex items-center justify-center w-12 h-12 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white text-3xl shadow-lg transition" title="Invitar Bot">
+                +
+            </a>
         </div>
     </aside>
     <!-- Main Content -->
